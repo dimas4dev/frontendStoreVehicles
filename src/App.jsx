@@ -1,8 +1,11 @@
+import { Route } from "wouter";
+
 
 import './App.css'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Clients } from './pages/Clients'
+import { Concessionaries } from './pages/Concesionaries'
 import { ApiClient } from './utilities/client'
 
 function App() {
@@ -11,7 +14,8 @@ function App() {
   return (
     <>
       <Header />
-      <Clients Client={Client} />
+      <Route path="/allConcessionaries"><Concessionaries Client={Client} /></Route>
+      <Route path="/allClients"><Clients Client={Client} /></Route>
       <Footer />
     </>
   )

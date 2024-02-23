@@ -1,28 +1,32 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const TableClients = ({ Client }) => {
+const TableConcessionaries = ({ Client }) => {
 
-    const [clients, setClients] = useState([]);
+    const [concesionaries, setConcesionaries] = useState([]);
     const [limit, setLimit] = useState(15);
     const [offset, setOffset] = useState(0);
     const [disabledNext, setDisabledNext] = useState(false)
     const [disabledPrevious, setDisabledPrevious] = useState(true)
 
     useEffect(() => {
-        const fetchClients = async () => {
-            const response = await Client.get("clients");
-            setClients(response);
+        const fetchConcesionaries = async () => {
+            const response = await Client.get("concessionaires");
+            setConcesionaries(response);
         }
-        fetchClients();
+        fetchConcesionaries();
+
+        if (concesionaries.length <= 15) {
+            setDisabledNext(true);
+        }
     }, []);
 
     const handleNext = () => {
-        if (limit < clients.length) {
+        if (limit < concesionaries.length) {
             setDisabledPrevious(false);
             setLimit(limit + 15);
             setOffset(offset + 15);
 
-            if (limit + 15 >= clients.length) {
+            if (limit + 15 >= concesionaries.length) {
                 setDisabledNext(true);
             }
 
@@ -48,33 +52,33 @@ const TableClients = ({ Client }) => {
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
-                            ID Cliente
+                            ID Concesionario
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Nombre
+                            Nombre Concesionario
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Email
+                            Direccion Concesionario
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Telefono
+                            Ciudad del Concesionario
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {clients.slice(offset, limit).map((client, id) => (
+                    {concesionaries.slice(offset, limit).map((concessionarie, id) => (
                         <tr key={`Client # ${id}`} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {client.clienteid}
+                                {concessionarie.concesionarioid}
                             </th>
                             <td className="px-6 py-4">
-                                {client.nombre}
+                                {concessionarie.nombre}
                             </td>
                             <td className="px-6 py-4">
-                                {client.email}
+                                {concessionarie.direccion}
                             </td>
                             <td className="px-6 py-4">
-                                {client.telefono}
+                                {concessionarie.ciudad}
                             </td>
                         </tr>
 
@@ -94,4 +98,4 @@ const TableClients = ({ Client }) => {
     )
 }
 
-export { TableClients }
+export { TableConcessionaries }

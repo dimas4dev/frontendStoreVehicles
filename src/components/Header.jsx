@@ -1,5 +1,7 @@
+import { Link } from "wouter"
+
 import StoreVehicleIcon from "./assets/mantenimiento.svg"
-import LogoutIcon from "./assets/logout.svg"
+
 const Header = () => {
     return (
         <header className="flex justify-between m-4">
@@ -9,8 +11,8 @@ const Header = () => {
             </div>
             <nav className="flex items-center">
                 <ul className="flex font-semibold justify-evenly items-center">
-                    <li className="px-4 hover:text-cyan-600"><a href="">Clientes</a></li>
-                    <li className="px-4 hover:text-cyan-600"><a href="">Concesionarios</a></li>
+                    <li className="px-4 hover:text-cyan-600"><Link href="/allClients">Clientes</Link></li>
+                    <li className="px-4 hover:text-cyan-600"><Link href="/allConcessionaries">Concesionarios</Link></li>
                     <li className="px-4 hover:text-red-600">Cerrar Sesion</li>
                 </ul>
             </nav>
