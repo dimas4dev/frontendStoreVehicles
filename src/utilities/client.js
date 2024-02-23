@@ -91,6 +91,27 @@ class ApiClient {
         }
     }
 
+    async patch(path, data) {
+        // Implementación de la petición Patch.
+        try {
+            const response = await fetch(this.baseUrl + path, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return await response.json();
+        }
+        catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+
     async delete(path) {
         // Implementación de la petición DELETE.
         try {

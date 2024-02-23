@@ -1,4 +1,3 @@
-import React from "react";
 import { TableClients } from "../components/TableClients";
 
 const Clients = ({ Client }) => {

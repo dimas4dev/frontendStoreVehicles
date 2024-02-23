@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { Modal } from "./Modal";
+import { FormEditUser } from "./FormEditUser";
+import { DeleteAlert } from "./DeleteAlert";
+
 
 const TableClients = ({ Client }) => {
 
@@ -7,6 +11,9 @@ const TableClients = ({ Client }) => {
     const [offset, setOffset] = useState(0);
     const [disabledNext, setDisabledNext] = useState(false)
     const [disabledPrevious, setDisabledPrevious] = useState(true)
+    const [showModal, setShowModal] = useState(false);
+    const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+    const [children, setChildren] = useState(null);
 
     useEffect(() => {
         const fetchClients = async () => {
@@ -41,6 +48,20 @@ const TableClients = ({ Client }) => {
         }
     }
 
+    const handleOpenModal = (client, typeModal) => {
+        switch (typeModal) {
+            case "Edit":
+                setShowModal(true);
+                setChildren(<FormEditUser initialClient={client} onClose={() => setShowModal(false)} client={Client} setShowModal={setShowModal} />);
+                break;
+            case "Delete":
+                setShowDeleteAlert(true);
+                break;
+            default:
+                break;
+
+        }
+    }
 
     return (
         <div className="relative overflow-x-auto">
@@ -59,6 +80,9 @@ const TableClients = ({ Client }) => {
                         <th scope="col" className="px-6 py-3">
                             Telefono
                         </th>
+                        <th scope="col" className="px-6 py-3">
+                            Acciones
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,6 +100,11 @@ const TableClients = ({ Client }) => {
                             <td className="px-6 py-4">
                                 {client.telefono}
                             </td>
+                            <td className="px-6 py-4">
+                                <button className="px-4 py-2 mx-1 bg-blue-500 text-white rounded-lg hover:bg-blue-700" onClick={() => handleOpenModal(client, "Edit")}>Editar</button>
+
+                                <button className="px-4 py-2 mx-1 bg-red-500 text-white rounded-lg hover:bg-red-700" onClick={() => handleOpenModal(client, "Delete")}>Eliminar</button>
+                            </td>
                         </tr>
 
                     ))}
@@ -89,6 +118,9 @@ const TableClients = ({ Client }) => {
                     </tr>
                 </tfoot>
             </table>
+
+            {showModal && <Modal showModal={showModal} setShowModal={setShowModal}>{children}</Modal>}
+            {showDeleteAlert && <DeleteAlert client={Client} color="red" showAlert={showDeleteAlert} setShowAlert={setShowDeleteAlert} />}
         </div>
 
     )

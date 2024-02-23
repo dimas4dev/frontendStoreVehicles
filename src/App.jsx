@@ -7,6 +7,7 @@ import { Header } from './components/Header'
 import { Clients } from './pages/Clients'
 import { Concessionaries } from './pages/Concesionaries'
 import { ApiClient } from './utilities/client'
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const Client = new ApiClient("http://localhost:3000/api/v2/");
@@ -17,6 +18,8 @@ function App() {
       <Route path="/allConcessionaries"><Concessionaries Client={Client} /></Route>
       <Route path="/allClients"><Clients Client={Client} /></Route>
       <Footer />
+      <ToastContainer />
+
     </>
   )
 }
